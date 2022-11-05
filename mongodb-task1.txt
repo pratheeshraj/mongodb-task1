@@ -1,0 +1,76 @@
+1) Find all the information about each products
+
+ANS:-db.product.find({})
+
+2)Find the product price which are between 400 to 800
+
+ANS:- db.product.find({product_price:{$gte:400,$lte:800}}).pretty()
+
+3)Find the product price which are not between 400 to 600
+
+Ans:- db.product.find({$and:[{product_price:{$lte:400},product_price:{ $gte:600}}]}).pretty()
+
+4) List the four product which are grater than 500 in price
+
+Ans:-
+
+db.product.find({product_price:{$gte:500}},{product_name:1}).pretty()
+
+5) Find the product name and product material of each products.
+
+Ans:-db.product.find({},{product_name:1,product_material:1}).pretty()
+
+6) Find the product with a row id of 10.
+
+Ans:- db.product.find({id:"10"}).pretty()
+
+7) Find only the product name and product material
+
+Ans:- db.product.find({},{product_name:1,product_material:1}).pretty()
+
+8) Find all products which contain the value of soft in product material
+
+Ans:- > db.product.find({product_material:{$in:["Soft"]}}).pretty()
+
+9)F ind products which contain product color indigo and product price 492.00
+
+Ans:- db.product.find({product_price:492}).pretty)
+Ans:- db.product.find({product_color:"indigo"}).pretty()
+
+10) Delete the products which product price value are same
+
+Ans:-
+
+db.products.aggregate([
+
+{
+
+"$group": {
+
+price:{$gt:0}
+
+},
+
+{
+
+"$match": {
+
+price:{$gt:0}
+
+}
+
+}
+
+])
+
+doc.dups.shift();
+
+db.products.remove({
+
+_id: {$in: doc.dups}
+
+});
+
+})
+
+
